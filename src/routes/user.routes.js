@@ -1,15 +1,15 @@
 import { Router } from "express";
-import { 
-    loginUser, 
-    logoutUser, 
-    registerUser, 
-    refreshAccessToken, 
-    changeCurrentPassword, 
-    getCurrentUser, 
-    updateUserAvatar, 
-    updateUserCoverImage, 
-    getUserChannelProfile, 
-    getWatchHistory, 
+import {
+    loginUser,
+    logoutUser,
+    registerUser,
+    refreshAccessToken,
+    changeCurrentPassword,
+    getCurrentUser,
+    updateUserAvatar,
+    updateUserCoverImage,
+    getUserChannelProfile,
+    getWatchHistory,
     updateAccountDetails
 } from "../controllers/user.controller.js";
 import {upload} from "../middlewares/multer.middleware.js"
@@ -23,7 +23,7 @@ router.route("/register").post(
         {
             name: "avatar",
             maxCount: 1
-        }, 
+        },
         {
             name: "coverImage",
             maxCount: 1
@@ -47,4 +47,4 @@ router.route("/cover-image").patch(verifyJWT, upload.single("coverImage"), updat
 router.route("/c/:username").get(verifyJWT, getUserChannelProfile)
 router.route("/history").get(verifyJWT, getWatchHistory)
 
-export default router
+export default router 

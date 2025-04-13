@@ -26,13 +26,13 @@ router
                 name: "thumbnail",
                 maxCount: 1,
             },
-            
+
         ]),
         publishAVideo
     );
 
 router
-    .route("/:videoId")
+    .route("/:videoId") 
     .get(getVideoById)
     .delete(deleteVideo)
     .patch(upload.single("thumbnail"), updateVideo);

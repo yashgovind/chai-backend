@@ -9,14 +9,18 @@ import mongoose from "mongoose";
 
 const generateAccessAndRefereshTokens = async(userId) =>{
     try {
-        const user = await User.findById(userId)
+        const user = await User.findById(userId);
+        // console.log('user before generating tokens  is: ', user);
         const accessToken = user.generateAccessToken()
         const refreshToken = user.generateRefreshToken()
+        // console.log('access token ',accessToken )
 
-        user.refreshToken = refreshToken
+        user.refreshToken = refreshToken;
         await user.save({ validateBeforeSave: false })
 
-        return {accessToken, refreshToken}
+        // console.log('refresh token ', refreshToken);
+        // console.log('user is : ', user);
+        return { accessToken, refreshToken };
 
 
     } catch (error) {
@@ -52,7 +56,7 @@ const registerUser = asyncHandler( async (req, res) => {
     if (existedUser) {
         throw new ApiError(409, "User with email or username already exists")
     }
-    //console.log(req.files);
+    console.log(req.files);
 
     const avatarLocalPath = req.files?.avatar[0]?.path;
     //const coverImageLocalPath = req.files?.coverImage[0]?.path;
@@ -61,7 +65,7 @@ const registerUser = asyncHandler( async (req, res) => {
     if (req.files && Array.isArray(req.files.coverImage) && req.files.coverImage.length > 0) {
         coverImageLocalPath = req.files.coverImage[0].path
     }
-    
+
 
     if (!avatarLocalPath) {
         throw new ApiError(400, "Avatar file is required")
@@ -73,13 +77,13 @@ const registerUser = asyncHandler( async (req, res) => {
     if (!avatar) {
         throw new ApiError(400, "Avatar file is required")
     }
-   
+
 
     const user = await User.create({
         fullName,
         avatar: avatar.url,
         coverImage: coverImage?.url || "",
-        email, 
+        email,
         password,
         username: username.toLowerCase()
     })
@@ -107,16 +111,16 @@ const loginUser = asyncHandler(async (req, res) =>{
     //send cookie
 
     const {email, username, password} = req.body
-    console.log(email);
+    // console.log(email);
 
     if (!username && !email) {
         throw new ApiError(400, "username or email is required")
     }
-    
+
     // Here is an alternative of above code based on logic discussed in video:
     // if (!(username || email)) {
     //     throw new ApiError(400, "username or email is required")
-        
+
     // }
 
     const user = await User.findOne({
@@ -148,7 +152,7 @@ const loginUser = asyncHandler(async (req, res) =>{
     .cookie("refreshToken", refreshToken, options)
     .json(
         new ApiResponse(
-            200, 
+            200,
             {
                 user: loggedInUser, accessToken, refreshToken
             },
@@ -195,33 +199,33 @@ const refreshAccessToken = asyncHandler(async (req, res) => {
             incomingRefreshToken,
             process.env.REFRESH_TOKEN_SECRET
         )
-    
+
         const user = await User.findById(decodedToken?._id)
-    
+
         if (!user) {
             throw new ApiError(401, "Invalid refresh token")
         }
-    
+
         if (incomingRefreshToken !== user?.refreshToken) {
             throw new ApiError(401, "Refresh token is expired or used")
-            
+
         }
-    
+
         const options = {
             httpOnly: true,
             secure: true
         }
-    
-        const {accessToken, newRefreshToken} = await generateAccessAndRefereshTokens(user._id)
-    
+
+        const { accessToken, refreshToken } = await generateAccessAndRefereshTokens(user._id);
+
         return res
         .status(200)
         .cookie("accessToken", accessToken, options)
-        .cookie("refreshToken", newRefreshToken, options)
+        .cookie("refreshToken", refreshToken, options)
         .json(
             new ApiResponse(
-                200, 
-                {accessToken, refreshToken: newRefreshToken},
+                200,
+                {accessToken, refreshToken: refreshToken},
                 "Access token refreshed"
             )
         )
@@ -234,7 +238,7 @@ const refreshAccessToken = asyncHandler(async (req, res) => {
 const changeCurrentPassword = asyncHandler(async(req, res) => {
     const {oldPassword, newPassword} = req.body
 
-    
+
 
     const user = await User.findById(req.user?._id)
     const isPasswordCorrect = await user.isPasswordCorrect(oldPassword)
@@ -278,7 +282,7 @@ const updateAccountDetails = asyncHandler(async(req, res) => {
             }
         },
         {new: true}
-        
+
     ).select("-password")
 
     return res
@@ -299,7 +303,7 @@ const updateUserAvatar = asyncHandler(async(req, res) => {
 
     if (!avatar.url) {
         throw new ApiError(400, "Error while uploading on avatar")
-        
+
     }
 
     const user = await User.findByIdAndUpdate(
@@ -333,7 +337,7 @@ const updateUserCoverImage = asyncHandler(async(req, res) => {
 
     if (!coverImage.url) {
         throw new ApiError(400, "Error while uploading on avatar")
-        
+
     }
 
     const user = await User.findByIdAndUpdate(
