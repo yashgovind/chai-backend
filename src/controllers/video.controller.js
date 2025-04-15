@@ -54,7 +54,7 @@ const getAllVideos = asyncHandler(async (req, res) => {
 
     // const owner = await User.findById(userId);
 
-    if (!userId && !owner && !query) {
+    if (!userId || !owner || !query) {
         throw new ApiError(404, "userID or owner or query is not defined");
     }
 
