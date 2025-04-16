@@ -129,15 +129,30 @@ const toggleTweetLike = asyncHandler(async (req, res) => {
 //#TODO
 const getLikedVideos = asyncHandler(async (req, res) => {
     //TODO: get all liked videos
-    const userId = req.user?._id;
+    const userId = req.user?._id
     /*
- -> match the videoID 
+ -> find all likes by user related to videos. ensure that video exists.. and populate the likedVidoes for more details needed.
 
     */
-    const likedVideos = await Like.aggregate([
+    if (!userId) {
+        throw new ApiError(404, "userid not defined so cant get liked videos");
+    }
+    const likedVideos = await Like.find({
+        likedBy: userId,
+        video: { $exists: true }
+    }).populate("video _id title url");
 
-    ])
-})
+    if (likedVideos.length === 0) {
+        return res
+            .status(200)
+            .json(new ApiResponse(200, [], "No liked videos found"));
+    }
+
+    return res.status(200).json(
+        new ApiResponse(200, likedVideos, "liked videos fetched successfully")
+    );
+});
+
 
 export {
     toggleCommentLike,
