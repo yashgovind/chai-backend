@@ -86,9 +86,7 @@ const getAllVideos = asyncHandler(async (req, res) => {
         {
             $addFields: {
                 userVids: {
-                    $owner: {
-                        $first:"videosByOwner"
-                    }
+                 $first:"videosByOwner"
                 }
             }
         },

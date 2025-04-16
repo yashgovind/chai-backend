@@ -12,7 +12,7 @@ const createTweet = asyncHandler(async (req, res) => {
         throw new ApiError(500, "content not found while creating a tweet")
     }
   const newTweet =   await Tweet.create({
-        owner: req?._id,
+        owner: req.user?._id,
         content:content
   })
     if (!newTweet) {
@@ -54,7 +54,7 @@ const updateTweet = asyncHandler(async (req, res) => {
         {
             $set: {
                 content: content,
-                owner:req?._id
+                owner:req.user?._id
             }
         },
         {new:true}
