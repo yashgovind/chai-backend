@@ -1,0 +1,279 @@
+{
+	"info": {
+		"_postman_id": "69220c14-0331-48f4-a73b-aa2ba390ba72",
+		"name": "yt-backend",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "29730661"
+	},
+	"item": [
+		{
+			"name": "users",
+			"item": [
+				{
+					"name": "registerUser",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "username",
+									"value": "yash12345777",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "pass12",
+									"type": "text"
+								},
+								{
+									"key": "fullName",
+									"value": "yourDAD123",
+									"type": "text"
+								},
+								{
+									"key": "avatar",
+									"type": "file",
+									"src": "/C:/Users/Yash/Pictures/Screenshots/Screenshot 2025-04-03 224732.png"
+								},
+								{
+									"key": "coverImage",
+									"type": "file",
+									"src": "/C:/Users/Yash/Pictures/Screenshots/Screenshot 2025-03-29 124606.png"
+								},
+								{
+									"key": "email",
+									"value": "yg1234577@mail.com",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{server}}/users/register",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"users",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login-user",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "yg1234577@mail.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "pass12",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{server}}/users/login",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"users",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "refresh",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "refreshToken",
+									"value": "{{refreshToken}}",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{server}}/users/refresh-token",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"users",
+								"refresh-token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "logout",
+					"request": {
+						"auth": {
+							"type": "jwt",
+							"jwt": [
+								{
+									"key": "secret",
+									"value": "{{refreshToken}}",
+									"type": "string"
+								},
+								{
+									"key": "payload",
+									"value": "",
+									"type": "string"
+								},
+								{
+									"key": "algorithm",
+									"value": "HS256",
+									"type": "string"
+								},
+								{
+									"key": "isSecretBase64Encoded",
+									"value": false,
+									"type": "boolean"
+								},
+								{
+									"key": "addTokenTo",
+									"value": "header",
+									"type": "string"
+								},
+								{
+									"key": "headerPrefix",
+									"value": "Bearer",
+									"type": "string"
+								},
+								{
+									"key": "queryParamKey",
+									"value": "token",
+									"type": "string"
+								},
+								{
+									"key": "header",
+									"value": "{}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{server}}/users/logout",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"users",
+								"logout"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "change-password",
+					"request": {
+						"auth": {
+							"type": "jwt",
+							"jwt": [
+								{
+									"key": "secret",
+									"value": "{{accessToken}}",
+									"type": "string"
+								},
+								{
+									"key": "payload",
+									"value": "",
+									"type": "string"
+								},
+								{
+									"key": "algorithm",
+									"value": "HS256",
+									"type": "string"
+								},
+								{
+									"key": "isSecretBase64Encoded",
+									"value": false,
+									"type": "boolean"
+								},
+								{
+									"key": "addTokenTo",
+									"value": "header",
+									"type": "string"
+								},
+								{
+									"key": "headerPrefix",
+									"value": "Bearer",
+									"type": "string"
+								},
+								{
+									"key": "queryParamKey",
+									"value": "token",
+									"type": "string"
+								},
+								{
+									"key": "header",
+									"value": "{}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{server}}/users/change-password",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"users",
+								"change-password"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "video",
+			"item": [
+				{
+					"name": "getAllVideos",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "New Request",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
