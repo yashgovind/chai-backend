@@ -1,0 +1,21 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Debug chai-backend (Debug Console only)",
+      "program": "${workspaceFolder}/src/index.js",
+      "runtimeArgs": [
+        "-r",
+        "dotenv/config",
+        "--experimental-json-modules"
+      ],
+      "env": {
+        "NODE_ENV": "development"
+      },
+      "console": "internalConsole",         // <- Debug Console only
+      "internalConsoleOptions": "openOnSessionStart"
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+meta {
+  name: logout
+  type: http
+  seq: 4
+}
+
+post {
+  url: {{server}}/users/logout
+  body: none
+  auth: none
+}
+
+headers {
+  Authorization: {{accessToken}}
+}

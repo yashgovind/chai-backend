@@ -1,0 +1,19 @@
+meta {
+  name: registerUser
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{server}}/users/register
+  body: multipartForm
+  auth: none
+}
+
+body:multipart-form {
+  username: yash12345777
+  password: pass12
+  fullName: yourDAD123
+  email: yg1234577@mail.com
+  avatar: @file()
+}

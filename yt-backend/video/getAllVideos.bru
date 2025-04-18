@@ -1,0 +1,19 @@
+meta {
+  name: getAllVideos
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{server}}/videos/?userId=6801f0016fd6ad633eadd72c
+  body: none
+  auth: none
+}
+
+params:query {
+  userId: 6801f0016fd6ad633eadd72c
+}
+
+headers {
+  Authorization: {{accessToken}}
+}

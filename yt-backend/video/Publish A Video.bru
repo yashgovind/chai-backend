@@ -1,0 +1,20 @@
+meta {
+  name: Publish A Video
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{server}}/videos/
+  body: multipartForm
+  auth: none
+}
+
+headers {
+  Authorization: {{accessToken}}
+}
+
+body:multipart-form {
+  title: New Video
+  description: This is a brand new video
+}
